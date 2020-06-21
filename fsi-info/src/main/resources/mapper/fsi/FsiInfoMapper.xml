@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fsi.info.mapper.FsiInfoMapper">
+    
+    <resultMap type="FsiInfo" id="FsiInfoResult">
+        <result property="infoId"    column="info_id"    />
+        <result property="sectionCode"    column="section_code"    />
+        <result property="sectionName"    column="section_name"    />
+        <result property="prodCateName"    column="prod_cate_name"    />
+        <result property="prodCateCode"    column="prod_cate_code"    />
+        <result property="countryRegionName"    column="country_region_name"    />
+        <result property="countryRegionCode"    column="country_region_code"    />
+        <result property="publishOrg"    column="publish_org"    />
+        <result property="enterprise"    column="enterprise"    />
+        <result property="brand"    column="brand"    />
+        <result property="sourceArea"    column="source_area"    />
+        <result property="productName"    column="product_name"    />
+        <result property="unqualifiedItemName"    column="unqualified_item_name"    />
+        <result property="unqualifiedItemCode"    column="unqualified_item_code"    />
+        <result property="measure"    column="measure"    />
+        <result property="sourceAddress"    column="source_address"    />
+        <result property="sourcePublTime"    column="source_publ_time"    />
+        <result property="content"    column="content"    />
+        <result property="publishTime"    column="publish_time"    />
+        <result property="creatorId"    column="creator_id"    />
+        <result property="releaserId"    column="releaser_id"    />
+        <result property="creator"    column="creator"    />
+        <result property="releaser"    column="releaser"    />
+        <result property="status"    column="status"    />
+        <result property="recommended"    column="recommended"    />
+        <result property="used"    column="used"    />
+        <result property="cream"    column="cream"    />
+        <result property="score"    column="score"    />
+        <result property="special"    column="special"    />
+        <result property="infoType"    column="info_type"    />
+        <result property="firstOrgId"    column="first_org_id"    />
+        <result property="secondOrgId"    column="second_org_id"    />
+        <result property="firstOrgName"    column="first_org_name"    />
+        <result property="secondOrgName"    column="second_org_name"    />
+        <result property="isdel"    column="isdel"    />
+        <result property="replyId"    column="reply_id"    />
+        <result property="reply"    column="reply"    />
+        <result property="replyTime"    column="reply_time"    />
+        <result property="recommendorId"    column="recommendor_id"    />
+        <result property="recommendorName"    column="recommendor_name"    />
+        <result property="recommendedTime"    column="recommended_time"    />
+        <result property="infoTitle"    column="info_title"    />
+        <result property="audited"    column="audited"    />
+        <result property="repeat"    column="repeat"    />
+        <result property="tomodify"    column="tomodify"    />
+        <result property="istop"    column="istop"    />
+        <result property="topEndTime"    column="top_end_time"    />
+        <result property="weixinStatus"    column="weixin_status"    />
+        <result property="unqualifiedCauseName"    column="unqualified_cause_name"    />
+        <result property="unqualifiedCauseCode"    column="unqualified_cause_code"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectFsiInfoVo">
+        select info_id, section_code, section_name, prod_cate_name, prod_cate_code, country_region_name, country_region_code, publish_org, enterprise, brand, source_area, product_name, unqualified_item_name, unqualified_item_code, measure, source_address, source_publ_time, content, publish_time, creator_id, releaser_id, creator, releaser, status, recommended, used, cream, score, special, info_type, first_org_id, second_org_id, first_org_name, second_org_name, isdel, reply_id, reply, reply_time, recommendor_id, recommendor_name, recommended_time, info_title, audited, repeat, tomodify, istop, top_end_time, weixin_status, unqualified_cause_name, unqualified_cause_code, create_time from fsi_info
+    </sql>
+
+    <select id="selectFsiInfoList" parameterType="FsiInfo" resultMap="FsiInfoResult">
+        <include refid="selectFsiInfoVo"/>
+        <where>  
+            <if test="publishTime != null "> and publish_time = #{publishTime}</if>
+            <if test="releaser != null  and releaser != ''"> and releaser = #{releaser}</if>
+            <if test="recommended != null  and recommended != ''"> and recommended = #{recommended}</if>
+            <if test="used != null  and used != ''"> and used = #{used}</if>
+            <if test="recommendorName != null  and recommendorName != ''"> and recommendor_name like concat('%', #{recommendorName}, '%')</if>
+            <if test="infoTitle != null  and infoTitle != ''"> and info_title = #{infoTitle}</if>
+        </where>
+    </select>
+    
+    <select id="selectFsiInfoById" parameterType="Long" resultMap="FsiInfoResult">
+        <include refid="selectFsiInfoVo"/>
+        where info_id = #{infoId}
+    </select>
+        
+    <insert id="insertFsiInfo" parameterType="FsiInfo" useGeneratedKeys="true" keyProperty="infoId">
+        insert into fsi_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sectionCode != null  and sectionCode != ''">section_code,</if>
+            <if test="sectionName != null  and sectionName != ''">section_name,</if>
+            <if test="prodCateName != null  and prodCateName != ''">prod_cate_name,</if>
+            <if test="prodCateCode != null  and prodCateCode != ''">prod_cate_code,</if>
+            <if test="countryRegionName != null  and countryRegionName != ''">country_region_name,</if>
+            <if test="countryRegionCode != null  and countryRegionCode != ''">country_region_code,</if>
+            <if test="publishOrg != null  and publishOrg != ''">publish_org,</if>
+            <if test="enterprise != null  and enterprise != ''">enterprise,</if>
+            <if test="brand != null  and brand != ''">brand,</if>
+            <if test="sourceArea != null  and sourceArea != ''">source_area,</if>
+            <if test="productName != null  and productName != ''">product_name,</if>
+            <if test="unqualifiedItemName != null  and unqualifiedItemName != ''">unqualified_item_name,</if>
+            <if test="unqualifiedItemCode != null  and unqualifiedItemCode != ''">unqualified_item_code,</if>
+            <if test="measure != null  and measure != ''">measure,</if>
+            <if test="sourceAddress != null  and sourceAddress != ''">source_address,</if>
+            <if test="sourcePublTime != null  and sourcePublTime != ''">source_publ_time,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="publishTime != null ">publish_time,</if>
+            <if test="creatorId != null ">creator_id,</if>
+            <if test="releaserId != null ">releaser_id,</if>
+            <if test="creator != null  and creator != ''">creator,</if>
+            <if test="releaser != null  and releaser != ''">releaser,</if>
+            <if test="status != null  and status != ''">status,</if>
+            <if test="recommended != null  and recommended != ''">recommended,</if>
+            <if test="used != null  and used != ''">used,</if>
+            <if test="cream != null  and cream != ''">cream,</if>
+            <if test="score != null  and score != ''">score,</if>
+            <if test="special != null  and special != ''">special,</if>
+            <if test="infoType != null  and infoType != ''">info_type,</if>
+            <if test="firstOrgId != null ">first_org_id,</if>
+            <if test="secondOrgId != null ">second_org_id,</if>
+            <if test="firstOrgName != null  and firstOrgName != ''">first_org_name,</if>
+            <if test="secondOrgName != null  and secondOrgName != ''">second_org_name,</if>
+            <if test="isdel != null  and isdel != ''">isdel,</if>
+            <if test="replyId != null ">reply_id,</if>
+            <if test="reply != null  and reply != ''">reply,</if>
+            <if test="replyTime != null ">reply_time,</if>
+            <if test="recommendorId != null ">recommendor_id,</if>
+            <if test="recommendorName != null  and recommendorName != ''">recommendor_name,</if>
+            <if test="recommendedTime != null ">recommended_time,</if>
+            <if test="infoTitle != null  and infoTitle != ''">info_title,</if>
+            <if test="audited != null  and audited != ''">audited,</if>
+            <if test="repeat != null  and repeat != ''">repeat,</if>
+            <if test="tomodify != null  and tomodify != ''">tomodify,</if>
+            <if test="istop != null  and istop != ''">istop,</if>
+            <if test="topEndTime != null ">top_end_time,</if>
+            <if test="weixinStatus != null  and weixinStatus != ''">weixin_status,</if>
+            <if test="unqualifiedCauseName != null  and unqualifiedCauseName != ''">unqualified_cause_name,</if>
+            <if test="unqualifiedCauseCode != null  and unqualifiedCauseCode != ''">unqualified_cause_code,</if>
+            <if test="createTime != null ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sectionCode != null  and sectionCode != ''">#{sectionCode},</if>
+            <if test="sectionName != null  and sectionName != ''">#{sectionName},</if>
+            <if test="prodCateName != null  and prodCateName != ''">#{prodCateName},</if>
+            <if test="prodCateCode != null  and prodCateCode != ''">#{prodCateCode},</if>
+            <if test="countryRegionName != null  and countryRegionName != ''">#{countryRegionName},</if>
+            <if test="countryRegionCode != null  and countryRegionCode != ''">#{countryRegionCode},</if>
+            <if test="publishOrg != null  and publishOrg != ''">#{publishOrg},</if>
+            <if test="enterprise != null  and enterprise != ''">#{enterprise},</if>
+            <if test="brand != null  and brand != ''">#{brand},</if>
+            <if test="sourceArea != null  and sourceArea != ''">#{sourceArea},</if>
+            <if test="productName != null  and productName != ''">#{productName},</if>
+            <if test="unqualifiedItemName != null  and unqualifiedItemName != ''">#{unqualifiedItemName},</if>
+            <if test="unqualifiedItemCode != null  and unqualifiedItemCode != ''">#{unqualifiedItemCode},</if>
+            <if test="measure != null  and measure != ''">#{measure},</if>
+            <if test="sourceAddress != null  and sourceAddress != ''">#{sourceAddress},</if>
+            <if test="sourcePublTime != null  and sourcePublTime != ''">#{sourcePublTime},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="publishTime != null ">#{publishTime},</if>
+            <if test="creatorId != null ">#{creatorId},</if>
+            <if test="releaserId != null ">#{releaserId},</if>
+            <if test="creator != null  and creator != ''">#{creator},</if>
+            <if test="releaser != null  and releaser != ''">#{releaser},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="recommended != null  and recommended != ''">#{recommended},</if>
+            <if test="used != null  and used != ''">#{used},</if>
+            <if test="cream != null  and cream != ''">#{cream},</if>
+            <if test="score != null  and score != ''">#{score},</if>
+            <if test="special != null  and special != ''">#{special},</if>
+            <if test="infoType != null  and infoType != ''">#{infoType},</if>
+            <if test="firstOrgId != null ">#{firstOrgId},</if>
+            <if test="secondOrgId != null ">#{secondOrgId},</if>
+            <if test="firstOrgName != null  and firstOrgName != ''">#{firstOrgName},</if>
+            <if test="secondOrgName != null  and secondOrgName != ''">#{secondOrgName},</if>
+            <if test="isdel != null  and isdel != ''">#{isdel},</if>
+            <if test="replyId != null ">#{replyId},</if>
+            <if test="reply != null  and reply != ''">#{reply},</if>
+            <if test="replyTime != null ">#{replyTime},</if>
+            <if test="recommendorId != null ">#{recommendorId},</if>
+            <if test="recommendorName != null  and recommendorName != ''">#{recommendorName},</if>
+            <if test="recommendedTime != null ">#{recommendedTime},</if>
+            <if test="infoTitle != null  and infoTitle != ''">#{infoTitle},</if>
+            <if test="audited != null  and audited != ''">#{audited},</if>
+            <if test="repeat != null  and repeat != ''">#{repeat},</if>
+            <if test="tomodify != null  and tomodify != ''">#{tomodify},</if>
+            <if test="istop != null  and istop != ''">#{istop},</if>
+            <if test="topEndTime != null ">#{topEndTime},</if>
+            <if test="weixinStatus != null  and weixinStatus != ''">#{weixinStatus},</if>
+            <if test="unqualifiedCauseName != null  and unqualifiedCauseName != ''">#{unqualifiedCauseName},</if>
+            <if test="unqualifiedCauseCode != null  and unqualifiedCauseCode != ''">#{unqualifiedCauseCode},</if>
+            <if test="createTime != null ">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFsiInfo" parameterType="FsiInfo">
+        update fsi_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sectionCode != null  and sectionCode != ''">section_code = #{sectionCode},</if>
+            <if test="sectionName != null  and sectionName != ''">section_name = #{sectionName},</if>
+            <if test="prodCateName != null  and prodCateName != ''">prod_cate_name = #{prodCateName},</if>
+            <if test="prodCateCode != null  and prodCateCode != ''">prod_cate_code = #{prodCateCode},</if>
+            <if test="countryRegionName != null  and countryRegionName != ''">country_region_name = #{countryRegionName},</if>
+            <if test="countryRegionCode != null  and countryRegionCode != ''">country_region_code = #{countryRegionCode},</if>
+            <if test="publishOrg != null  and publishOrg != ''">publish_org = #{publishOrg},</if>
+            <if test="enterprise != null  and enterprise != ''">enterprise = #{enterprise},</if>
+            <if test="brand != null  and brand != ''">brand = #{brand},</if>
+            <if test="sourceArea != null  and sourceArea != ''">source_area = #{sourceArea},</if>
+            <if test="productName != null  and productName != ''">product_name = #{productName},</if>
+            <if test="unqualifiedItemName != null  and unqualifiedItemName != ''">unqualified_item_name = #{unqualifiedItemName},</if>
+            <if test="unqualifiedItemCode != null  and unqualifiedItemCode != ''">unqualified_item_code = #{unqualifiedItemCode},</if>
+            <if test="measure != null  and measure != ''">measure = #{measure},</if>
+            <if test="sourceAddress != null  and sourceAddress != ''">source_address = #{sourceAddress},</if>
+            <if test="sourcePublTime != null  and sourcePublTime != ''">source_publ_time = #{sourcePublTime},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="publishTime != null ">publish_time = #{publishTime},</if>
+            <if test="creatorId != null ">creator_id = #{creatorId},</if>
+            <if test="releaserId != null ">releaser_id = #{releaserId},</if>
+            <if test="creator != null  and creator != ''">creator = #{creator},</if>
+            <if test="releaser != null  and releaser != ''">releaser = #{releaser},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="recommended != null  and recommended != ''">recommended = #{recommended},</if>
+            <if test="used != null  and used != ''">used = #{used},</if>
+            <if test="cream != null  and cream != ''">cream = #{cream},</if>
+            <if test="score != null  and score != ''">score = #{score},</if>
+            <if test="special != null  and special != ''">special = #{special},</if>
+            <if test="infoType != null  and infoType != ''">info_type = #{infoType},</if>
+            <if test="firstOrgId != null ">first_org_id = #{firstOrgId},</if>
+            <if test="secondOrgId != null ">second_org_id = #{secondOrgId},</if>
+            <if test="firstOrgName != null  and firstOrgName != ''">first_org_name = #{firstOrgName},</if>
+            <if test="secondOrgName != null  and secondOrgName != ''">second_org_name = #{secondOrgName},</if>
+            <if test="isdel != null  and isdel != ''">isdel = #{isdel},</if>
+            <if test="replyId != null ">reply_id = #{replyId},</if>
+            <if test="reply != null  and reply != ''">reply = #{reply},</if>
+            <if test="replyTime != null ">reply_time = #{replyTime},</if>
+            <if test="recommendorId != null ">recommendor_id = #{recommendorId},</if>
+            <if test="recommendorName != null  and recommendorName != ''">recommendor_name = #{recommendorName},</if>
+            <if test="recommendedTime != null ">recommended_time = #{recommendedTime},</if>
+            <if test="infoTitle != null  and infoTitle != ''">info_title = #{infoTitle},</if>
+            <if test="audited != null  and audited != ''">audited = #{audited},</if>
+            <if test="repeat != null  and repeat != ''">repeat = #{repeat},</if>
+            <if test="tomodify != null  and tomodify != ''">tomodify = #{tomodify},</if>
+            <if test="istop != null  and istop != ''">istop = #{istop},</if>
+            <if test="topEndTime != null ">top_end_time = #{topEndTime},</if>
+            <if test="weixinStatus != null  and weixinStatus != ''">weixin_status = #{weixinStatus},</if>
+            <if test="unqualifiedCauseName != null  and unqualifiedCauseName != ''">unqualified_cause_name = #{unqualifiedCauseName},</if>
+            <if test="unqualifiedCauseCode != null  and unqualifiedCauseCode != ''">unqualified_cause_code = #{unqualifiedCauseCode},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+        </trim>
+        where info_id = #{infoId}
+    </update>
+
+    <delete id="deleteFsiInfoById" parameterType="Long">
+        delete from fsi_info where info_id = #{infoId}
+    </delete>
+
+    <delete id="deleteFsiInfoByIds" parameterType="String">
+        delete from fsi_info where info_id in 
+        <foreach item="infoId" collection="array" open="(" separator="," close=")">
+            #{infoId}
+        </foreach>
+    </delete>
+    
+</mapper>

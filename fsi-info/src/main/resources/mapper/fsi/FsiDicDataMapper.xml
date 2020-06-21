@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fsi.info.mapper.FsiDicDataMapper">
+    
+    <resultMap type="FsiDicData" id="FsiDicDataResult">
+        <result property="id"    column="id"    />
+        <result property="dicTypeCode"    column="dic_type_code"    />
+        <result property="dicTypeName"    column="dic_type_name"    />
+        <result property="dicKey"    column="dic_key"    />
+        <result property="dicValue"    column="dic_value"    />
+        <result property="parent"    column="parent"    />
+        <result property="area"    column="area"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="dicSort"    column="dic_sort"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFsiDicDataVo">
+        select id, dic_type_code, dic_type_name, dic_key, dic_value, parent, area, area_name, dic_sort, status, create_time, update_time, delete_flag from fsi_dic_data
+    </sql>
+
+    <select id="selectFsiDicDataList" parameterType="FsiDicData" resultMap="FsiDicDataResult">
+        <include refid="selectFsiDicDataVo"/>
+        <where>  
+            <if test="dicTypeCode != null  and dicTypeCode != ''"> and dic_type_code = #{dicTypeCode}</if>
+            <if test="dicTypeName != null  and dicTypeName != ''"> and dic_type_name like concat('%', #{dicTypeName}, '%')</if>
+            <if test="dicKey != null  and dicKey != ''"> and dic_key = #{dicKey}</if>
+            <if test="dicValue != null  and dicValue != ''"> and dic_value = #{dicValue}</if>
+            <if test="parent != null  and parent != ''"> and parent = #{parent}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="areaName != null  and areaName != ''"> and area_name like concat('%', #{areaName}, '%')</if>
+            <if test="dicSort != null "> and dic_sort = #{dicSort}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFsiDicDataById" parameterType="Long" resultMap="FsiDicDataResult">
+        <include refid="selectFsiDicDataVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFsiDicData" parameterType="FsiDicData" useGeneratedKeys="true" keyProperty="id">
+        insert into fsi_dic_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dicTypeCode != null  and dicTypeCode != ''">dic_type_code,</if>
+            <if test="dicTypeName != null  and dicTypeName != ''">dic_type_name,</if>
+            <if test="dicKey != null  and dicKey != ''">dic_key,</if>
+            <if test="dicValue != null  and dicValue != ''">dic_value,</if>
+            <if test="parent != null  and parent != ''">parent,</if>
+            <if test="area != null  and area != ''">area,</if>
+            <if test="areaName != null  and areaName != ''">area_name,</if>
+            <if test="dicSort != null ">dic_sort,</if>
+            <if test="status != null  and status != ''">status,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dicTypeCode != null  and dicTypeCode != ''">#{dicTypeCode},</if>
+            <if test="dicTypeName != null  and dicTypeName != ''">#{dicTypeName},</if>
+            <if test="dicKey != null  and dicKey != ''">#{dicKey},</if>
+            <if test="dicValue != null  and dicValue != ''">#{dicValue},</if>
+            <if test="parent != null  and parent != ''">#{parent},</if>
+            <if test="area != null  and area != ''">#{area},</if>
+            <if test="areaName != null  and areaName != ''">#{areaName},</if>
+            <if test="dicSort != null ">#{dicSort},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFsiDicData" parameterType="FsiDicData">
+        update fsi_dic_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dicTypeCode != null  and dicTypeCode != ''">dic_type_code = #{dicTypeCode},</if>
+            <if test="dicTypeName != null  and dicTypeName != ''">dic_type_name = #{dicTypeName},</if>
+            <if test="dicKey != null  and dicKey != ''">dic_key = #{dicKey},</if>
+            <if test="dicValue != null  and dicValue != ''">dic_value = #{dicValue},</if>
+            <if test="parent != null  and parent != ''">parent = #{parent},</if>
+            <if test="area != null  and area != ''">area = #{area},</if>
+            <if test="areaName != null  and areaName != ''">area_name = #{areaName},</if>
+            <if test="dicSort != null ">dic_sort = #{dicSort},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFsiDicDataById" parameterType="Long">
+        delete from fsi_dic_data where id = #{id}
+    </delete>
+
+    <delete id="deleteFsiDicDataByIds" parameterType="String">
+        delete from fsi_dic_data where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
